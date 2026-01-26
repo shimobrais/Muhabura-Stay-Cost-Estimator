@@ -52,12 +52,61 @@
 
     <h3>Extra Services</h3>
     <div class="services">
-      <label><input type="checkbox" value="breakfast"> Breakfast</label>
-      <label><input type="checkbox" value="airport"> Airport Pickup</label>
-      <label><input type="checkbox" value="spa"> Spa</label>
-      <label><input type="checkbox" value="gym"> Gym</label>
-      <label><input type="checkbox" value="meeting"> Meeting Room</label>
-      <label><input type="checkbox" value="dining"> Dining</label>
+      <div class="service-card">
+        <div class="service-image" style="background: linear-gradient(135deg, #FFD700, #FFA500);">🍽️</div>
+        <h4>Breakfast</h4>
+        <p>Buffet breakfast included daily</p>
+        <label class="service-checkbox"><input type="checkbox" value="breakfast"> Select</label>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-image" style="background: linear-gradient(135deg, #87CEEB, #4A90E2);">🚗</div>
+        <h4>Airport Pickup</h4>
+        <p>Convenient airport transfer service</p>
+        <label class="service-checkbox"><input type="checkbox" value="airport"> Select</label>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-image" style="background: linear-gradient(135deg, #FFB6C1, #FF69B4);">💆</div>
+        <h4>Spa & Wellness</h4>
+        <p>Relaxing spa treatments & massages</p>
+        <label class="service-checkbox"><input type="checkbox" value="spa"> Select</label>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-image" style="background: linear-gradient(135deg, #90EE90, #32CD32);">💪</div>
+        <h4>Gym Access</h4>
+        <p>Modern fitness equipment & facilities</p>
+        <label class="service-checkbox"><input type="checkbox" value="gym"> Select</label>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-image" style="background: linear-gradient(135deg, #DDA0DD, #9370DB);">📊</div>
+        <h4>Meeting Room</h4>
+        <p>Professional conference & meeting space</p>
+        <label class="service-checkbox"><input type="checkbox" value="meeting"> Select</label>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-image" style="background: linear-gradient(135deg, #FF6347, #DC143C);">🍷</div>
+        <h4>Fine Dining</h4>
+        <p>Gourmet dining & wine experience</p>
+        <label class="service-checkbox"><input type="checkbox" value="dining"> Select</label>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-image" style="background: linear-gradient(135deg, #FF8C00, #FFB347);">🍜</div>
+        <h4>Lunch Package</h4>
+        <p>Delicious daily lunch served in restaurant</p>
+        <label class="service-checkbox"><input type="checkbox" value="lunch"> Select</label>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-image" style="background: linear-gradient(135deg, #20B2AA, #48D1CC);">🏔️</div>
+        <h4>Musanze Tour</h4>
+        <p>Guided mountain tour and local experience</p>
+        <label class="service-checkbox"><input type="checkbox" value="musanze"> Select</label>
+      </div>
     </div>
   </section>
 
@@ -76,6 +125,7 @@
     </div>
 
     <button onclick="window.print()">Print Summary</button>
+    <button class="btn-booking" onclick="openBookingModal()">Complete Booking</button>
   </section>
 </main>
 
@@ -103,6 +153,72 @@
       <input type="password" placeholder="Password" required>
       <input type="password" placeholder="Confirm Password" required>
       <button type="submit" class="modal-btn">Sign Up</button>
+    </form>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div id="bookingModal" class="modal">
+  <div class="modal-content booking-modal">
+    <span class="close" onclick="closeBookingModal()">&times;</span>
+    <h2>Complete Your Booking</h2>
+    
+    <form id="bookingForm">
+      <h3>Guest Information</h3>
+      <input type="text" placeholder="Full Name" id="bookingName" required>
+      <input type="email" placeholder="Email Address" id="bookingEmail" required>
+      <input type="tel" placeholder="Phone Number" id="bookingPhone" required>
+      
+      <h3>Booking Summary</h3>
+      <div class="booking-summary">
+        <p><strong>Check-in:</strong> <span id="bookingSummaryCheckIn">-</span></p>
+        <p><strong>Check-out:</strong> <span id="bookingSummaryCheckOut">-</span></p>
+        <p><strong>Room Type:</strong> <span id="bookingSummaryRoom">-</span></p>
+        <p><strong>Number of Guests:</strong> <span id="bookingSummaryGuests">-</span></p>
+        
+        <h4>Selected Services:</h4>
+        <div id="bookingSummaryServices"></div>
+        
+        <hr>
+        <p><strong>Subtotal:</strong> <span id="bookingSummarySubtotal">0</span> RWF</p>
+        <p style="color: #27ae60; font-weight: bold;"><strong>Discount (5%):</strong> -<span id="bookingSummaryDiscount">0</span> RWF</p>
+        <p><strong>Final Amount:</strong> <span id="bookingSummaryTotal">0</span> RWF</p>
+      </div>
+      
+      <h3>Payment Options</h3>
+      <div class="payment-options">
+        <label class="payment-option">
+          <input type="radio" name="paymentAmount" value="half" required>
+          <span>Pay Half (50%): <span id="halfAmount">0</span> RWF</span>
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentAmount" value="full" required>
+          <span>Pay Full Amount: <span id="fullAmount">0</span> RWF</span>
+        </label>
+      </div>
+      
+      <h3>Payment Method</h3>
+      <div class="payment-methods">
+        <label class="payment-method">
+          <input type="radio" name="paymentMethod" value="bank" required>
+          <span>🏦 Bank Transfer</span>
+        </label>
+        <label class="payment-method">
+          <input type="radio" name="paymentMethod" value="mtn" required>
+          <span>📱 MTN Money (MoMo)</span>
+        </label>
+        <label class="payment-method">
+          <input type="radio" name="paymentMethod" value="airtel" required>
+          <span>📱 Airtel Money</span>
+        </label>
+      </div>
+      
+      <label style="margin-top: 1rem;">
+        <input type="checkbox" id="agreeTerms" required>
+        I agree to the terms and conditions
+      </label>
+      
+      <button type="submit" class="modal-btn booking-btn">Confirm Booking</button>
     </form>
   </div>
 </div>
