@@ -1,66 +1,82 @@
 <?php 
-// Go up one folder to find the database connection
 include '../db.php'; 
 
-// Handle Delete
-if(isset($_GET['delete'])) {
-    $id = $_GET['delete'];
+// Delete a service
+if(isset($_GET['del_service'])) {
+    $id = $_GET['del_service'];
     mysqli_query($conn, "DELETE FROM services WHERE id=$id");
-    header('location: index.php');
+    header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Muhabura Admin</title>
-    <link rel="stylesheet" href="../styles.css">
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | Muhabura Hotel</title>
     <style>
-        .admin-container { max-width: 1000px; margin: 50px auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        body { font-family: 'Segoe UI', sans-serif; padding: 40px; background: #f4f7f6; color: #333; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        h1, h2 { color: #1f3c88; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 40px; }
         th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
         th { background: #1f3c88; color: white; }
-        .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .badge-room { background: #e3f2fd; color: #1976d2; }
-        .badge-extra { background: #f3e5f5; color: #7b1fa2; }
-        .btn-add { background: #27ae60; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; float: right; }
+        .btn { padding: 8px 15px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        .btn-add { background: #27ae60; color: white; float: right; }
+        .btn-del { color: #e74c3c; }
     </style>
 </head>
 <body>
-    <div class="admin-container">
-        <a href="add_service.php" class="btn-add">+ Add New Service</a>
-        <h1>Hotel Management</h1>
-        <p>Control prices for Muhabura Hotel Cloud System</p>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Service Name</th>
-                    <th>Category</th>
-                    <th>Min Price</th>
-                    <th>Max Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $result = mysqli_query($conn, "SELECT * FROM services ORDER BY category DESC");
-                while($row = mysqli_fetch_assoc($result)) {
-                    $badgeClass = ($row['category'] == 'Room') ? 'badge-room' : 'badge-extra';
-                    echo "<tr>
-                        <td><strong>{$row['service_name']}</strong></td>
-                        <td><span class='badge {$badgeClass}'>{$row['category']}</span></td>
-                        <td>".number_format($row['min_price'])." RWF</td>
-                        <td>".number_format($row['max_price'])." RWF</td>
-                        <td>
-                            <a href='index.php?delete={$row['id']}' style='color:red;' onclick='return confirm(\"Delete this service?\")'>Delete</a>
-                        </td>
-                    </tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-        <br>
-        <a href="../index.php">← View Public Website</a>
-    </div>
+<div class="container">
+    <h1>Management Dashboard</h1>
+    
+    <h2>Recent Client Leads</h2>
+    <table>
+        <tr>
+            <th>Phone Number</th>
+            <th>Date Captured</th>
+            <th>Action</th>
+        </tr>
+        <?php
+        $leads = mysqli_query($conn, "SELECT * FROM leads ORDER BY created_at DESC");
+        while($l = mysqli_fetch_assoc($leads)) {
+            echo "<tr>
+                    <td>{$l['phone']}</td>
+                    <td>{$l['created_at']}</td>
+                    <td><a href='https://wa.me/{$l['phone']}' target='_blank' style='color:#27ae60;'>Contact via WhatsApp</a></td>
+                  </tr>";
+        }
+        ?>
+    </table>
+
+    <hr>
+
+    <a href="add_service.php" class="btn btn-add">+ Add New Service/Room</a>
+    <h2>Manage Services & Prices</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price Range (RWF)</th>
+            <th>Actions</th>
+        </tr>
+        <?php
+        $res = mysqli_query($conn, "SELECT * FROM services ORDER BY category ASC");
+        while($r = mysqli_fetch_assoc($res)) {
+            echo "<tr>
+                    <td><strong>{$r['name']}</strong></td>
+                    <td>{$r['category']}</td>
+                    <td>" . number_format($r['min_price']) . " - " . number_format($r['max_price']) . "</td>
+                    <td>
+                        <a href='index.php?del_service={$r['id']}' class='btn-del' onclick='return confirm(\"Delete this service?\")'>Delete</a>
+                    </td>
+                  </tr>";
+        }
+        ?>
+    </table>
+    
+    <p style="text-align: center;"><a href="../index.php">← Back to Public Website</a></p>
+</div>
+
 </body>
 </html>
