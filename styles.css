@@ -557,3 +557,97 @@ footer {
   color: #27ae60;
   font-weight: 600;
 }
+/* =========================
+   DARK MODE OVERRIDES
+   ========================= */
+
+/* MAIN BACKGROUND */
+body {
+  background: #0f172a; /* dark navy */
+  color: #e5e7eb;      /* light gray text */
+}
+
+/* HEADER */
+header {
+  background: #020617; /* darker header */
+}
+
+/* PANELS / CARDS */
+.panel {
+  background: #111827; /* dark card */
+  color: #e5e7eb;
+}
+
+/* SERVICE CARDS */
+.service-card {
+  background: #1f2933;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+.service-card p {
+  color: #9ca3af;
+}
+
+/* SELECTED SERVICE */
+.service-card.selected {
+  background: #2a1f24;
+  border-color: #ff6b6b;
+}
+
+/* INPUTS & SELECT */
+input,
+select {
+  background: #020617;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+/* SUMMARY BOX */
+.summary {
+  background: #020617;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+/* MODALS */
+.modal-content {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+.close {
+  color: #9ca3af;
+}
+
+.close:hover {
+  color: white;
+}
+
+/* BOOKING SUMMARY */
+.booking-summary {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+/* PAYMENT OPTIONS */
+.payment-option,
+.payment-method {
+  background: #020617;
+  border-color: #374151;
+}
+
+.payment-option span,
+.payment-method span {
+  color: #e5e7eb;
+}
+
+/* FOOTER */
+footer {
+  color: #9ca3af;
+}
+
